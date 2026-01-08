@@ -7,6 +7,9 @@
 #include <lib/simplefb.h>
 #include <main.h>
 
+#define S3C2410_BASE 0x10440000
+#define S3C2410_UTXH 0x20
+
 // Early initialization
 int beyondlte_init(void)
 {
@@ -30,6 +33,11 @@ int beyondlte_drv(void)
 	REGISTER_DRIVER("simplefb", simplefb_probe, &beyondlte_fb);
 #endif
 	return 0;
+}
+
+void uart_putc(char ch)
+{
+	*((volatile unsigned char *)(S3C2410_BASE + S3C2410_UTXH)) = '@';
 }
 
 struct board_data board_ops = {

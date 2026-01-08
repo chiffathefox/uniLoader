@@ -14,11 +14,11 @@ extern struct board_data board_ops;
 #ifdef CONFIG_LIBFDT
 static char fdt_buf[CONFIG_FDT_BUF_SIZE];
 #endif
-
+void uart_putc(char ch);
 void main(void* dt, void* kernel, void* ramdisk)
 {
 	int ret;
-
+	uart_putc('c');
 	INITCALL(board_ops.ops.early_init);
 	INITCALL(board_ops.ops.drivers_init);
 
