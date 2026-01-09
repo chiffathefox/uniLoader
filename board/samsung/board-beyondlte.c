@@ -4,11 +4,11 @@
  */
 #include <board.h>
 #include <drivers/framework.h>
+#include <drivers/samsung/exynos-s3c2410.h>
 #include <lib/simplefb.h>
 #include <main.h>
 
-#define S3C2410_BASE 0x10440000
-#define S3C2410_UTXH 0x20
+#define BEYONDLTE_UART (CONFIG_UART_DEBUG && CONFIG_EXYNOS_S3C2410)
 
 // Early initialization
 int beyondlte_init(void)
@@ -25,19 +25,23 @@ static struct video_info beyondlte_fb = {
 	.stride = 4,
 	.address = (void *)0xcc000000
 };
-#endif
+#endif /* CONFIG_SIMPLE_FB */
+
+#if BEYONDLTE_UART
+static struct s3c2410_info beyondlte_uart = {
+	.membase = (void *)0x10440000,
+};
+#endif /* BEYONDLTE_UART */
 
 int beyondlte_drv(void)
 {
 #ifdef CONFIG_SIMPLE_FB
 	REGISTER_DRIVER("simplefb", simplefb_probe, &beyondlte_fb);
-#endif
+#endif /* CONFIG_SIMPLE_FB */
+#if BEYONDLTE_UART
+	REGISTER_DRIVER("s3c2410", s3c2410_probe, &beyondlte_uart);
+#endif /* BEYONDLTE_UART */
 	return 0;
-}
-
-void uart_putc(char ch)
-{
-	*((volatile unsigned char *)(S3C2410_BASE + S3C2410_UTXH)) = '@';
 }
 
 struct board_data board_ops = {
