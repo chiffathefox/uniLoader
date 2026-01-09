@@ -28,6 +28,7 @@ char *strrchr (const char *s, int c);
 long atol (const char *s);
 void writel (unsigned int value, void* address);
 uint32_t readl(volatile uint32_t *addr);
+void writeb (uint8_t b, volatile void *addr);
 
 // C-driven optimized functions
 void *memset (void *m, int c, size_t n);

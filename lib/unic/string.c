@@ -221,3 +221,9 @@ uint32_t readl(volatile uint32_t *addr)
 {
 	return *addr;
 }
+
+void writeb(uint8_t b, volatile void *addr)
+{
+	volatile uint8_t *p = addr;
+	*p = b;
+}
