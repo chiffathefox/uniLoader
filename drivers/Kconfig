@@ -10,6 +10,11 @@ menu "Drivers"
 		default n
 		help
 		    Say Y if you have a device with the Samsung Exynos SPEEDY bus.
-    
+
+	config EXYNOS_S3C2410
+		bool "Support for Samsung Exynos S3C2410 Serial Port"
+		default n
+		help
+		    Say Y if you have a device with the Samsung Exynos S3C2410 Serial Port.
 
 endmenu
